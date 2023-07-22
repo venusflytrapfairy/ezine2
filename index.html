@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Google tag (gtag.js) -->
+ <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-R955D3QVEG"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -49,6 +49,19 @@
       max-width: 100%;
       max-height: 100%;
     }
+    /* Button styles */
+    #previousPageButton {
+      position: absolute;
+      left: 20px;
+      bottom: 20px;
+      background-color: hotpink;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      display: none; /* Hidden by default */
+    }
   </style>
 </head>
 <body>
@@ -73,17 +86,18 @@
     </div>
     <!-- Continue adding all 28 pages -->
   </div>
+  
+  <!-- Previous Page Button -->
+  <button id="previousPageButton">Previous Page</button>
 
   <!-- No comments and likes section -->
-
-   <script>
-
-    
-   const flipbook = document.getElementById("flipbook");
+  
+  <script>
+    const flipbook = document.getElementById("flipbook");
     const pages = document.querySelectorAll(".page");
     let currentPage = 0;
+    const previousPageButton = document.getElementById("previousPageButton");
 
-    
     function flipPages() {
       pages[currentPage].style.transform = "rotateY(180deg)";
       pages[currentPage].style.opacity = "0"; 
@@ -91,6 +105,34 @@
       pages[currentPage].style.transform = "rotateY(0deg)";
       pages[currentPage].style.opacity = "1"; 
       
+      // Show/hide the button based on the current page
+      if (currentPage >= 1) {
+        previousPageButton.style.display = "block";
+      } else {
+        previousPageButton.style.display = "none";
+      }
+
+      gtag('event', 'flipbook', {
+        event_category: 'engagement',
+        event_action: 'page_flip',
+        event_label: `Page ${currentPage + 1}`,
+      });
+    }
+
+    function flipToPreviousPage() {
+      pages[currentPage].style.transform = "rotateY(-180deg)";
+      pages[currentPage].style.opacity = "0"; 
+      currentPage = (currentPage - 1 + pages.length) % pages.length;
+      pages[currentPage].style.transform = "rotateY(0deg)";
+      pages[currentPage].style.opacity = "1"; 
+
+      // Show/hide the button based on the current page
+      if (currentPage >= 1) {
+        previousPageButton.style.display = "block";
+      } else {
+        previousPageButton.style.display = "none";
+      }
+
       gtag('event', 'flipbook', {
         event_category: 'engagement',
         event_action: 'page_flip',
@@ -101,6 +143,9 @@
     pages.forEach(page => {
       page.addEventListener("click", flipPages);
     });
+
+    // Add event listener to the button
+    previousPageButton.addEventListener("click", flipToPreviousPage);
   </script>
 </body>
 </html>
