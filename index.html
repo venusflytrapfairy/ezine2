@@ -24,8 +24,8 @@
       background-color: #fdd0e4; /* Set the background color to pale pink */
     }
     #flipbook {
-      width: 90%; /* Increase the width to make the flipbook larger (you can adjust the percentage as needed) */
-      height: 90%; /* Increase the height to make the flipbook larger (you can adjust the percentage as needed) */
+      width: 95%; /* Increase the width to make the flipbook larger (you can adjust the percentage as needed) */
+      height: 95%; /* Increase the height to make the flipbook larger (you can adjust the percentage as needed) */
       display: flex;
       perspective: 1000px;
       position: relative;
@@ -57,7 +57,7 @@
     <!-- Pages will be dynamically added here -->
     <div class="page" id="page1">
       <!-- Content for Page 1 -->
-      <img src="Cover.png" alt="Page 1">
+      <img src="cover.png" alt="Page 1">
     </div>
     <!-- Add more .page div elements with content for additional pages -->
     <div class="page">
@@ -76,22 +76,22 @@
   </div>
 
   <!-- No comments and likes section -->
-  
 
-    // JavaScript to add flipbook functionality and track page flips
-    const flipbook = document.getElementById("flipbook");
+   <script>
+
+    
+   const flipbook = document.getElementById("flipbook");
     const pages = document.querySelectorAll(".page");
     let currentPage = 0;
 
-    // Function to flip the pages and track page flip event
+    
     function flipPages() {
       pages[currentPage].style.transform = "rotateY(180deg)";
-      pages[currentPage].style.opacity = "0"; // Hide the current page
+      pages[currentPage].style.opacity = "0"; 
       currentPage = (currentPage + 1) % pages.length;
       pages[currentPage].style.transform = "rotateY(0deg)";
-      pages[currentPage].style.opacity = "1"; // Show the next page
-
-      // Track page flip event using Google Analytics
+      pages[currentPage].style.opacity = "1"; 
+      
       gtag('event', 'flipbook', {
         event_category: 'engagement',
         event_action: 'page_flip',
@@ -99,7 +99,6 @@
       });
     }
 
-    // Add a click event listener to each page
     pages.forEach(page => {
       page.addEventListener("click", flipPages);
     });
